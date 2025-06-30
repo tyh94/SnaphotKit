@@ -19,19 +19,66 @@ SnapshotsKit provides a simple and powerful way to create snapshot tests for Swi
 
 ### Swift Package Manager
 
-Add SnapshotsKit to your project dependencies:
+SnapshotsKit uses semantic versioning. Make sure to create a git tag for the version you want to support.
+
+#### Adding to Package.swift
+
+If you have a `Package.swift` file, add SnapshotsKit to your dependencies:
 
 ```swift
-dependencies: [
-    .package(url: "https://github.com/your-username/SnapshotsKit.git", from: "1.0.0")
-]
+// swift-tools-version: 5.9
+import PackageDescription
+
+let package = Package(
+    name: "YourProject",
+    platforms: [
+        .iOS(.v18),
+        .macOS(.v15)
+    ],
+    dependencies: [
+        .package(url: "https://github.com/your-username/SnapshotsKit.git", from: "1.0.0")
+    ],
+    targets: [
+        .target(
+            name: "YourApp",
+            dependencies: []
+        ),
+        .testTarget(
+            name: "YourAppTests",
+            dependencies: [
+                "YourApp",
+                "SnapshotsKit"
+            ]
+        )
+    ]
+)
 ```
+
+#### Adding via Xcode
+
+1. Open your project in Xcode
+2. Select your project in the navigator
+3. Go to the "Package Dependencies" tab
+4. Click "+" to add a new dependency
+5. Enter the URL: `https://github.com/your-username/SnapshotsKit.git`
+6. Select version (recommended "Up to Next Major" from version 1.0.0)
+7. Click "Add Package"
+8. Select your test target and click "Add Package"
+
+#### Configuring Test Target
+
+Make sure SnapshotsKit is added to your test target dependencies:
+
+1. Select your test target in the project navigator
+2. Go to "General" tab → "Frameworks, Libraries, and Embedded Content"
+3. Ensure `SnapshotsKit` is present in the list
 
 ### Requirements
 
 - iOS 18.0+
 - Swift 6.0+
 - Xcode 15.0+
+- Swift Testing framework (included in Xcode 15+)
 
 ## 🚀 Quick Start
 
