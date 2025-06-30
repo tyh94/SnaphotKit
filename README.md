@@ -1,25 +1,25 @@
 # SnapshotsKit
 
-Современный фреймворк для снепшот-тестирования SwiftUI представлений, построенный на основе нового Swift Testing framework.
+A modern framework for snapshot testing SwiftUI views, built on top of the new Swift Testing framework.
 
-## 📋 Описание
+## 📋 Description
 
-SnapshotsKit предоставляет простой и мощный способ создания снепшот-тестов для SwiftUI представлений. Фреймворк автоматически создает изображения ваших представлений и сравнивает их с сохраненными эталонными изображениями, что позволяет быстро обнаруживать визуальные регрессии.
+SnapshotsKit provides a simple and powerful way to create snapshot tests for SwiftUI views. The framework automatically creates images of your views and compares them with saved reference images, allowing you to quickly detect visual regressions.
 
-## ✨ Особенности
+## ✨ Features
 
-- 🎯 **Простота использования** - минимальный код для создания снепшот-тестов
-- 🔧 **Гибкая конфигурация** - настройка режимов записи и форматов изображений
-- 📱 **SwiftUI нативная поддержка** - специально разработан для SwiftUI представлений
-- 🧪 **Swift Testing интеграция** - использует современный Swift Testing framework
-- 📊 **Визуальное сравнение** - автоматическое создание изображений сравнения при неудачных тестах
-- 🎨 **Поддержка различных форматов** - PNG, JPEG и другие форматы изображений
+- 🎯 **Easy to use** - minimal code required to create snapshot tests
+- 🔧 **Flexible configuration** - customizable recording modes and image formats
+- 📱 **SwiftUI native support** - specifically designed for SwiftUI views
+- 🧪 **Swift Testing integration** - uses the modern Swift Testing framework
+- 📊 **Visual comparison** - automatic creation of comparison images for failed tests
+- 🎨 **Multiple format support** - PNG, JPEG and other image formats
 
-## 📦 Установка
+## 📦 Installation
 
 ### Swift Package Manager
 
-Добавьте SnapshotsKit в зависимости вашего проекта:
+Add SnapshotsKit to your project dependencies:
 
 ```swift
 dependencies: [
@@ -27,15 +27,15 @@ dependencies: [
 ]
 ```
 
-### Требования
+### Requirements
 
 - iOS 18.0+
 - Swift 6.0+
 - Xcode 15.0+
 
-## 🚀 Быстрый старт
+## 🚀 Quick Start
 
-### Базовое использование
+### Basic Usage
 
 ```swift
 import Testing
@@ -48,8 +48,8 @@ struct MySnapshotTests {
     
     @Test
     func testButtonView() {
-        let buttonView = Button("Нажми меня") {
-            // действие
+        let buttonView = Button("Tap me") {
+            // action
         }
         .padding()
         
@@ -60,9 +60,9 @@ struct MySnapshotTests {
     func testCustomView() {
         assertSnapshot {
             VStack {
-                Text("Заголовок")
+                Text("Title")
                     .font(.title)
-                Text("Подзаголовок")
+                Text("Subtitle")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
             }
@@ -72,22 +72,22 @@ struct MySnapshotTests {
 }
 ```
 
-### Конфигурация тестов
+### Test Configuration
 
 ```swift
-// Глобальная конфигурация для всего тестового набора
+// Global configuration for entire test suite
 @MainActor
 @Suite(.snapshots(record: .failed))
 struct ConfiguredTests {
     
     @Test
     func testWithCustomConfiguration() {
-        // Этот тест будет использовать конфигурацию из Suite
+        // This test will use the configuration from Suite
         assertSnapshot(of: MyView(), named: "my-view")
     }
 }
 
-// Конфигурация для отдельных тестов
+// Configuration for individual tests
 @MainActor
 struct IndividualTestConfiguration {
     
@@ -98,25 +98,25 @@ struct IndividualTestConfiguration {
 }
 ```
 
-## ⚙️ Конфигурация
+## ⚙️ Configuration
 
-### Режимы записи
+### Recording Modes
 
 ```swift
-// Записывать все снепшоты (по умолчанию)
+// Record all snapshots (default)
 .snapshots(record: .all)
 
-// Записывать только неудачные тесты
+// Record only failed tests
 .snapshots(record: .failed)
 
-// Записывать только отсутствующие снепшоты
+// Record only missing snapshots
 .snapshots(record: .missing)
 
-// Не записывать ничего
+// Don't record anything
 .snapshots(record: .never)
 ```
 
-### Пользовательская конфигурация
+### Custom Configuration
 
 ```swift
 let customConfig = SnapshotTestingConfiguration(
@@ -127,13 +127,13 @@ let customConfig = SnapshotTestingConfiguration(
 
 @Suite(.snapshots(customConfig))
 struct CustomConfiguredTests {
-    // тесты с пользовательской конфигурацией
+    // tests with custom configuration
 }
 ```
 
-## 📁 Структура файлов
+## 📁 File Structure
 
-Снепшоты автоматически сохраняются в следующей структуре:
+Snapshots are automatically saved in the following structure:
 
 ```
 Tests/
@@ -142,27 +142,27 @@ Tests/
     ├── YourTestFile/
     │   ├── button-view.png
     │   ├── custom-stack-view.png
-    │   └── button-view-FAILED.png (при неудачном тесте)
+    │   └── button-view-FAILED.png (on test failure)
     └── AnotherTestFile/
         └── another-view.png
 ```
 
-## 🔍 Отладка неудачных тестов
+## 🔍 Debugging Failed Tests
 
-При неудачном снепшот-тесте SnapshotsKit автоматически создает изображение сравнения, показывающее:
-- Оригинальный снепшот
-- Новый снепшот
-- Различия между ними
+When a snapshot test fails, SnapshotsKit automatically creates a comparison image showing:
+- Original snapshot
+- New snapshot
+- Differences between them
 
-Это помогает быстро понять, что изменилось в представлении.
+This helps you quickly understand what changed in the view.
 
 ## 🛠️ API Reference
 
-### Основные функции
+### Main Functions
 
 #### `assertSnapshot(of:named:sourceLocation:)`
 
-Создает снепшот представления и сравнивает его с сохраненным.
+Creates a snapshot of a view and compares it with the saved one.
 
 ```swift
 assertSnapshot(of: myView, named: "my-view")
@@ -170,7 +170,7 @@ assertSnapshot(of: myView, named: "my-view")
 
 #### `assertSnapshot(of:named:sourceLocation:)`
 
-Создает снепшот из замыкания, возвращающего представление.
+Creates a snapshot from a closure returning a view.
 
 ```swift
 assertSnapshot {
@@ -181,20 +181,20 @@ assertSnapshot {
 } named: "hello-world"
 ```
 
-### Трейты
+### Traits
 
 #### `.snapshots(record:)`
 
-Настраивает режим записи снепшотов для тестового набора или отдельного теста.
+Configures the snapshot recording mode for a test suite or individual test.
 
 ```swift
 @Suite(.snapshots(record: .failed))
 @Test(.snapshots(record: .missing))
 ```
 
-## 🧪 Примеры
+## 🧪 Examples
 
-### Тестирование различных состояний
+### Testing Different States
 
 ```swift
 @MainActor
@@ -208,7 +208,7 @@ struct StateSnapshotTests {
     
     @Test
     func testErrorState() {
-        assertSnapshot(of: ErrorView(message: "Ошибка загрузки"), named: "error-state")
+        assertSnapshot(of: ErrorView(message: "Loading error"), named: "error-state")
     }
     
     @Test
@@ -218,7 +218,7 @@ struct StateSnapshotTests {
 }
 ```
 
-### Тестирование адаптивности
+### Testing Adaptability
 
 ```swift
 @MainActor
@@ -242,19 +242,11 @@ struct AdaptiveSnapshotTests {
 }
 ```
 
-## 🤝 Вклад в проект
+## 📄 License
 
-Мы приветствуем вклад в развитие SnapshotsKit! Пожалуйста, создавайте issues для багов и feature requests, а также pull requests для улучшений.
-
-## 📄 Лицензия
-
-SnapshotsKit распространяется под лицензией MIT. См. файл [LICENSE](LICENSE) для подробностей.
-
-## 👥 Авторы
-
-- Татьяна Макеева - основной разработчик
+SnapshotsKit is distributed under the MIT license. See the [LICENSE](LICENSE) file for details.
 
 ---
 
-**Примечание**: Этот фреймворк находится в активной разработке. API может изменяться в будущих версиях.
+**Note**: This framework is under active development. The API may change in future versions.
 
